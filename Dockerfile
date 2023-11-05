@@ -1,7 +1,7 @@
 # build stage 
 FROM python:alpine as builder
 
-RUN apk upgrade
+RUN apk --no-cache upgrade
 
 RUN apk add --no-cache python3-dev \
     && apk add py3-pip \
@@ -19,7 +19,7 @@ RUN . /build/venv/bin/activate && \
 # Runtime
 FROM python:alpine as release
 
-RUN apk upgrade 
+RUN apk --no-cache upgrade
 
 WORKDIR /app
 
