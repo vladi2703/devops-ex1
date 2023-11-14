@@ -1,0 +1,35 @@
+name: CI
+on: [push]
+
+jobs:
+  editorconfig-check:
+    name: editorconfig-check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: editorconfig-checker/action-editorconfig-checker@main
+    - run: editorconfig-checker
+  markdown-check: 
+    name: markdown-check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: npx markdown-cli **/*.md
+  python-linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7.4
+          architecture: x64
+      - name: Checkout PyTorch
+        uses: actions/checkout@master
+      - name: Install flake8
+        run: pip install flake8
+      - name: Run flake8
+        uses: suo/flake8-github-action@releases/v1
+        with:
+          checkName: 'python-linting'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
