@@ -1,5 +1,5 @@
 # build stage 
-FROM python:alpine as builder
+FROM python:3.12.1-alpine3.19 as builder
 
 RUN apk --no-cache upgrade
 
@@ -17,7 +17,7 @@ RUN . /build/venv/bin/activate && \
     python3 -m pip install -r /build/requirements.txt
 
 # Runtime
-FROM python:alpine as release
+FROM python:3.12.1-alpine3.19 as release
 
 RUN apk --no-cache upgrade
 
